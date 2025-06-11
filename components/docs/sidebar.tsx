@@ -1,8 +1,12 @@
 "use client"
 
-import { cn } from "@/lib/utils"
-import { BackToHome } from "./back-to-home"
+import { Layout, Menu, Typography, Button } from "antd"
+import { HomeOutlined } from "@ant-design/icons"
+import Link from "next/link"
 import type { ComponentCategory } from "@/types/component"
+
+const { Sider } = Layout
+const { Title } = Typography
 
 interface SidebarProps {
   categories: ComponentCategory[]
@@ -11,57 +15,44 @@ interface SidebarProps {
 }
 
 export function Sidebar({ categories, selectedCategory, onCategorySelect }: SidebarProps) {
+  const menuItems = [
+    {
+      key: "overview",
+      label: "Components Overview",
+      onClick: () => onCategorySelect(null),
+    },
+    ...categories.map((category) => ({
+      key: category.name,
+      label: `${category.name} (${category.components.length})`,
+      onClick: () => onCategorySelect(category.name),
+      children: category.components.map((component) => ({
+        key: `${category.name}-${component.name}`,
+        label: (
+          <Link href={`/components/${component.name.toLowerCase()}`}>
+            {component.name}
+            {component.version && <span className="ml-2 text-xs text-green-600">{component.version}</span>}
+          </Link>
+        ),
+      })),
+    })),
+  ]
+
   return (
-    <aside className="w-64 border-r bg-muted/10 p-4">
-      <div className="space-y-4">
-        {/* Home Button */}
-        <div className="pb-2 border-b">
-          <BackToHome variant="home" className="w-full justify-start" />
-        </div>
+    <Sider width={280} className="bg-white border-r border-gray-200">
+      <div className="p-4 space-y-4">
+        <Link href="/">
+          <Button type="primary" icon={<HomeOutlined />} block>
+            Back to Home
+          </Button>
+        </Link>
 
-        {/* Navigation */}
-        <div className="space-y-2">
-          <button
-            onClick={() => onCategorySelect(null)}
-            className={cn(
-              "w-full text-left px-3 py-2 rounded-md text-sm font-medium transition-colors",
-              selectedCategory === null ? "bg-primary text-primary-foreground" : "hover:bg-muted",
-            )}
-          >
-            Components Overview
-          </button>
-
-          {categories.map((category) => (
-            <div key={category.name} className="space-y-1">
-              <button
-                onClick={() => onCategorySelect(category.name)}
-                className={cn(
-                  "w-full text-left px-3 py-2 rounded-md text-sm font-medium transition-colors",
-                  selectedCategory === category.name ? "bg-primary text-primary-foreground" : "hover:bg-muted",
-                )}
-              >
-                {category.name}
-                <span className="ml-2 text-xs text-muted-foreground">{category.components.length}</span>
-              </button>
-
-              {selectedCategory === category.name && (
-                <div className="ml-4 space-y-1">
-                  {category.components.map((component) => (
-                    <a
-                      key={component.name}
-                      href={`/components/${component.name.toLowerCase()}`}
-                      className="block px-3 py-1 text-sm text-muted-foreground hover:text-foreground transition-colors"
-                    >
-                      {component.name}
-                      {component.version && <span className="ml-2 text-xs text-green-600">{component.version}</span>}
-                    </a>
-                  ))}
-                </div>
-              )}
-            </div>
-          ))}
-        </div>
+        <Menu
+          mode="inline"
+          selectedKeys={selectedCategory ? [selectedCategory] : ["overview"]}
+          items={menuItems}
+          className="border-none"
+        />
       </div>
-    </aside>
+    </Sider>
   )
 }

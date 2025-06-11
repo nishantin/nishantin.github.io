@@ -1,8 +1,8 @@
 "use client"
 
 import Link from "next/link"
-import { Button } from "@/components/ui/button"
-import { Home, ArrowLeft } from "lucide-react"
+import { Button } from "antd"
+import { HomeOutlined, ArrowLeftOutlined } from "@ant-design/icons"
 
 interface BackToHomeProps {
   variant?: "home" | "back"
@@ -12,18 +12,8 @@ interface BackToHomeProps {
 export function BackToHome({ variant = "back", className }: BackToHomeProps) {
   return (
     <Link href="/">
-      <Button variant="outline" size="sm" className={className}>
-        {variant === "home" ? (
-          <>
-            <Home className="w-4 h-4 mr-2" />
-            Home
-          </>
-        ) : (
-          <>
-            <ArrowLeft className="w-4 h-4 mr-2" />
-            Back to Components
-          </>
-        )}
+      <Button type="default" icon={variant === "home" ? <HomeOutlined /> : <ArrowLeftOutlined />} className={className}>
+        {variant === "home" ? "Home" : "Back to Components"}
       </Button>
     </Link>
   )

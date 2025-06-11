@@ -1,9 +1,11 @@
 "use client"
 
 import Link from "next/link"
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
-import { Badge } from "@/components/ui/badge"
+import { Card, Tag, Typography } from "antd"
 import type { ComponentInfo } from "@/types/component"
+
+const { Meta } = Card
+const { Text } = Typography
 
 interface ComponentCardProps {
   component: ComponentInfo
@@ -12,23 +14,21 @@ interface ComponentCardProps {
 export function ComponentCard({ component }: ComponentCardProps) {
   return (
     <Link href={`/components/${component.name.toLowerCase()}`}>
-      <Card className="h-full hover:shadow-md transition-shadow cursor-pointer">
-        <CardHeader className="pb-3">
-          <div className="flex items-center justify-between">
-            <CardTitle className="text-lg">{component.name}</CardTitle>
-            {component.version && (
-              <Badge variant="secondary" className="text-xs">
-                {component.version}
-              </Badge>
-            )}
+      <Card
+        hoverable
+        className="h-full"
+        cover={
+          <div className="h-24 bg-gray-50 flex items-center justify-center border-b border-gray-200">
+            {component.preview}
           </div>
-        </CardHeader>
-
-        <CardContent className="space-y-4">
-          <div className="h-24 bg-muted/50 rounded-md flex items-center justify-center">{component.preview}</div>
-
-          <p className="text-sm text-muted-foreground">{component.description}</p>
-        </CardContent>
+        }
+        actions={[
+          <div key="version" className="px-4">
+            {component.version && <Tag color="success">{component.version}</Tag>}
+          </div>,
+        ]}
+      >
+        <Meta title={component.name} description={<Text type="secondary">{component.description}</Text>} />
       </Card>
     </Link>
   )

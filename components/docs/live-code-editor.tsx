@@ -2,13 +2,12 @@
 
 import { useState } from "react"
 import { LiveProvider, LiveEditor, LiveError, LivePreview } from "react-live"
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
-import { Button } from "@/components/ui/button"
-import { Badge } from "@/components/ui/badge"
-import { Input } from "@/components/ui/input"
-import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar"
-import { Separator } from "@/components/ui/separator"
-import { Copy, RotateCcw } from "lucide-react"
+import { Card, Button, Typography, Space } from "antd"
+import { CopyOutlined, ReloadOutlined } from "@ant-design/icons"
+import * as AntdComponents from "antd"
+import * as AntdIcons from "@ant-design/icons"
+
+const { Title, Text } = Typography
 
 interface LiveCodeEditorProps {
   code: string
@@ -29,62 +28,55 @@ export function LiveCodeEditor({ code, title = "Live Example", description, scop
   }
 
   const liveScope = {
-    Button,
-    Badge,
-    Input,
-    Card,
-    CardContent,
-    CardHeader,
-    CardTitle,
-    Avatar,
-    AvatarImage,
-    AvatarFallback,
-    Separator,
+    ...AntdComponents,
+    ...AntdIcons,
     ...scope,
   }
 
   return (
     <Card className="w-full">
-      <CardHeader>
-        <div className="flex items-center justify-between">
-          <div>
-            <CardTitle className="text-lg">{title}</CardTitle>
-            {description && <p className="text-sm text-muted-foreground mt-1">{description}</p>}
-          </div>
-          <div className="flex gap-2">
-            <Button variant="outline" size="sm" onClick={resetCode} className="gap-2">
-              <RotateCcw className="w-4 h-4" />
-              Reset
-            </Button>
-            <Button variant="outline" size="sm" onClick={copyToClipboard} className="gap-2">
-              <Copy className="w-4 h-4" />
-              Copy
-            </Button>
-          </div>
+      <div className="flex items-center justify-between mb-4">
+        <div>
+          <Title level={4} className="!mb-1">
+            {title}
+          </Title>
+          {description && <Text type="secondary">{description}</Text>}
         </div>
-      </CardHeader>
+        <Space>
+          <Button icon={<ReloadOutlined />} onClick={resetCode}>
+            Reset
+          </Button>
+          <Button type="primary" icon={<CopyOutlined />} onClick={copyToClipboard}>
+            Copy
+          </Button>
+        </Space>
+      </div>
 
-      <CardContent className="space-y-4">
+      <div className="space-y-4">
         <LiveProvider code={currentCode} scope={liveScope} noInline={false}>
           {/* Live Preview Section */}
           <div className="space-y-2">
-            <h4 className="text-sm font-medium text-muted-foreground">Preview</h4>
-            <div className="border rounded-md p-6 bg-background min-h-[120px] flex items-center justify-center">
+            <Text strong className="text-gray-600">
+              Preview
+            </Text>
+            <div className="border border-gray-200 rounded-lg p-6 bg-white min-h-[120px] flex items-center justify-center">
               <LivePreview />
             </div>
-            <LiveError className="p-2 bg-destructive/10 text-destructive text-sm rounded" />
+            <LiveError className="p-3 bg-red-50 text-red-600 text-sm rounded-lg border border-red-200" />
           </div>
 
           {/* Live Code Editor Section */}
           <div className="space-y-2">
-            <h4 className="text-sm font-medium text-muted-foreground">Code</h4>
-            <div className="border rounded-md overflow-hidden">
+            <Text strong className="text-gray-600">
+              Code
+            </Text>
+            <div className="border border-gray-200 rounded-lg overflow-hidden">
               <LiveEditor
                 onChange={setCurrentCode}
                 style={{
                   fontFamily: 'ui-monospace, SFMono-Regular, "SF Mono", Consolas, "Liberation Mono", Menlo, monospace',
                   fontSize: "14px",
-                  backgroundColor: "hsl(var(--muted))",
+                  backgroundColor: "#fafafa",
                   minHeight: "200px",
                   padding: "16px",
                 }}
@@ -92,7 +84,7 @@ export function LiveCodeEditor({ code, title = "Live Example", description, scop
             </div>
           </div>
         </LiveProvider>
-      </CardContent>
+      </div>
     </Card>
   )
 }

@@ -1,5 +1,5 @@
 {
-  "name": "ui-component-library",
+  "name": "bbrix-ui-library",
   "version": "0.1.0",
   "private": true,
   "scripts": {
@@ -10,14 +10,17 @@
     "type-check": "tsc --noEmit"
   },
   "dependencies": {
+    "@ant-design/icons": "latest",
     "@radix-ui/react-avatar": "latest",
     "@radix-ui/react-dropdown-menu": "latest",
     "@radix-ui/react-label": "latest",
     "@radix-ui/react-separator": "latest",
     "@radix-ui/react-slot": "latest",
     "@radix-ui/react-tabs": "latest",
+    "antd": "latest",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
+    "dayjs": "^1.11.10",
     "lucide-react": "^0.454.0",
     "next": "14.2.16",
     "next-themes": "latest",

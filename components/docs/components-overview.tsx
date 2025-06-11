@@ -1,12 +1,14 @@
 "use client"
 
 import { useState } from "react"
-import { Search } from "lucide-react"
-import { Input } from "@/components/ui/input"
-import { Button } from "@/components/ui/button"
+import { Layout, Input, Typography } from "antd"
+import { SearchOutlined } from "@ant-design/icons"
 import { Sidebar } from "@/components/docs/sidebar"
 import { ComponentGrid } from "@/components/docs/component-grid"
 import { componentCategories } from "@/lib/component-registry"
+
+const { Content } = Layout
+const { Title, Paragraph } = Typography
 
 export function ComponentsOverview() {
   const [searchQuery, setSearchQuery] = useState("")
@@ -24,41 +26,37 @@ export function ComponentsOverview() {
     .filter((category) => category.components.length > 0)
 
   return (
-    <div className="flex min-h-screen bg-background">
+    <Layout className="min-h-screen bg-gray-50">
       <Sidebar
         categories={componentCategories}
         selectedCategory={selectedCategory}
         onCategorySelect={setSelectedCategory}
       />
 
-      <main className="flex-1 p-6">
+      <Content className="p-6">
         <div className="max-w-7xl mx-auto">
           <header className="mb-8">
             <div className="flex items-center justify-between mb-4">
-              <h1 className="text-4xl font-bold">Components Overview</h1>
-              <Button variant="outline" onClick={() => window.location.reload()}>
-                Refresh
-              </Button>
+              <Title level={1}>Components Overview</Title>
             </div>
-            <p className="text-muted-foreground mb-6">
-              Our UI library provides plenty of components to enrich your web applications. All components feature live
-              code editing with real-time preview updates.
-            </p>
+            <Paragraph className="text-lg text-gray-600 mb-6">
+              Our UI library provides plenty of components built with Ant Design to enrich your web applications. All
+              components feature live code editing with real-time preview updates.
+            </Paragraph>
 
-            <div className="relative max-w-md">
-              <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground w-4 h-4" />
-              <Input
-                placeholder="Search in components"
-                value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)}
-                className="pl-10"
-              />
-            </div>
+            <Input
+              placeholder="Search in components"
+              prefix={<SearchOutlined />}
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+              className="max-w-md"
+              size="large"
+            />
           </header>
 
           <ComponentGrid categories={filteredCategories} selectedCategory={selectedCategory} />
         </div>
-      </main>
-    </div>
+      </Content>
+    </Layout>
   )
 }

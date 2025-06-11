@@ -1,40 +1,71 @@
 "use client"
 
+import { Layout, Typography, Tag, Divider, Table, Space } from "antd"
 import type { ComponentInfo } from "@/types/component"
 import { LiveCodeEditor } from "./live-code-editor"
 import { BackToHome } from "./back-to-home"
-import { Badge } from "@/components/ui/badge"
-import { Separator } from "@/components/ui/separator"
+
+const { Content } = Layout
+const { Title, Paragraph } = Typography
 
 interface ComponentDocumentationProps {
   component: ComponentInfo
 }
 
 export function ComponentDocumentation({ component }: ComponentDocumentationProps) {
+  const propsColumns = [
+    {
+      title: "Property",
+      dataIndex: "name",
+      key: "name",
+      render: (text: string, record: any) => (
+        <code className="bg-gray-100 px-2 py-1 rounded text-sm">
+          {text}
+          {record.required && <span className="text-red-500 ml-1">*</span>}
+        </code>
+      ),
+    },
+    {
+      title: "Type",
+      dataIndex: "type",
+      key: "type",
+      render: (text: string) => <code className="text-gray-600 text-sm">{text}</code>,
+    },
+    {
+      title: "Default",
+      dataIndex: "default",
+      key: "default",
+      render: (text: string) => <code className="text-sm">{text || "-"}</code>,
+    },
+    {
+      title: "Description",
+      dataIndex: "description",
+      key: "description",
+    },
+  ]
+
   return (
-    <div className="max-w-4xl mx-auto p-6 space-y-8">
+    <Content className="max-w-4xl mx-auto p-6 space-y-8">
       {/* Header with Back Button */}
       <div className="flex items-center justify-between">
         <BackToHome />
-        <div className="flex items-center gap-2">
-          {component.version && <Badge variant="secondary">{component.version}</Badge>}
-        </div>
+        <Space>{component.version && <Tag color="processing">{component.version}</Tag>}</Space>
       </div>
 
       <header className="space-y-4">
         <div className="flex items-center gap-4">
-          <h1 className="text-4xl font-bold">{component.name}</h1>
+          <Title level={1}>{component.name}</Title>
         </div>
-        <p className="text-lg text-muted-foreground">{component.description}</p>
+        <Paragraph className="text-lg text-gray-600">{component.description}</Paragraph>
       </header>
 
-      <Separator />
+      <Divider />
 
       <section className="space-y-6">
-        <h2 className="text-2xl font-semibold">Interactive Examples</h2>
-        <p className="text-muted-foreground">
+        <Title level={2}>Interactive Examples</Title>
+        <Paragraph type="secondary">
           Edit the code below to see live updates in the preview. Changes are reflected immediately as you type.
-        </p>
+        </Paragraph>
 
         {component.examples?.map((example, index) => (
           <LiveCodeEditor key={index} code={example.code} title={example.title} description={example.description} />
@@ -43,37 +74,18 @@ export function ComponentDocumentation({ component }: ComponentDocumentationProp
 
       {component.props && (
         <>
-          <Separator />
+          <Divider />
           <section className="space-y-4">
-            <h2 className="text-2xl font-semibold">API Reference</h2>
-            <div className="overflow-x-auto">
-              <table className="w-full border-collapse border border-border">
-                <thead>
-                  <tr className="bg-muted/50">
-                    <th className="border border-border p-3 text-left">Property</th>
-                    <th className="border border-border p-3 text-left">Type</th>
-                    <th className="border border-border p-3 text-left">Default</th>
-                    <th className="border border-border p-3 text-left">Description</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {component.props.map((prop) => (
-                    <tr key={prop.name}>
-                      <td className="border border-border p-3 font-mono text-sm">
-                        {prop.name}
-                        {prop.required && <span className="text-destructive ml-1">*</span>}
-                      </td>
-                      <td className="border border-border p-3 font-mono text-sm text-muted-foreground">{prop.type}</td>
-                      <td className="border border-border p-3 font-mono text-sm">{prop.default || "-"}</td>
-                      <td className="border border-border p-3 text-sm">{prop.description}</td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
-            </div>
+            <Title level={2}>API Reference</Title>
+            <Table
+              dataSource={component.props.map((prop, index) => ({ ...prop, key: index }))}
+              columns={propsColumns}
+              pagination={false}
+              size="small"
+            />
           </section>
         </>
       )}
-    </div>
+    </Content>
   )
 }
