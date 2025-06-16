@@ -11,12 +11,6 @@
   },
   "dependencies": {
     "@ant-design/icons": "latest",
-    "@radix-ui/react-avatar": "latest",
-    "@radix-ui/react-dropdown-menu": "latest",
-    "@radix-ui/react-label": "latest",
-    "@radix-ui/react-separator": "latest",
-    "@radix-ui/react-slot": "latest",
-    "@radix-ui/react-tabs": "latest",
     "antd": "latest",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
@@ -29,7 +23,9 @@
     "react-live": "latest",
     "tailwind-merge": "^2.5.5",
     "tailwindcss-animate": "^1.0.7",
-    "zod": "latest"
+    "tss-react": "^4.9.18",
+    "zod": "latest",
+    "sass": "^1.55.0"
   },
   "devDependencies": {
     "@types/node": "^22",

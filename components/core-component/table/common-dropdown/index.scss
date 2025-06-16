@@ -1,0 +1,54 @@
+.sp-dropdown-wrapper {
+	display: inline-block;
+	margin-right: 15px;
+	margin-bottom: 5px;
+	.dropdown-label {
+		margin-right: 5px;
+		font-size: 12px;
+		font-weight: 400;
+		line-height: 22px;
+		text-align: right;
+		color: #000000a6;
+		font-family: Inter;
+		position: relative;
+		top: -2px;
+	}
+
+	.reset-all {
+		font-family: Inter;
+		font-size: 10px;
+		font-weight: 700;
+		line-height: 14px;
+		text-align: left;
+		color: #0063c3;
+	}
+	.cp-select {
+		font-size: 12px;
+		color: #000000e0;
+		font-family: Inter;
+		font-weight: 400;
+		line-height: 18px;
+		text-align: left;
+	}
+
+	.ant-select-multiple .ant-select-selection-placeholder {
+		font-family: Inter;
+		font-size: 12px;
+		font-weight: 400;
+		line-height: 18px;
+		text-align: left;
+		color: #000000e0;
+	}
+
+	.ant-select-selector {
+		padding-block: 0px !important;
+	}
+}
+.sp-tab-reset-all{
+	font-family: Inter;
+	font-size: 10px;
+	font-weight: 700;
+	line-height: 14px;
+	text-align: left;
+	color: #0063c3;
+}

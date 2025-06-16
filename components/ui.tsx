@@ -1,8 +1,3 @@
-export { Button } from "./ui/button"
-export { Badge } from "./ui/badge"
-export { Card, CardHeader, CardFooter, CardTitle, CardDescription, CardContent } from "./ui/card"
-export { Input } from "./ui/input"
-export { Separator } from "./ui/separator"
-export { Tabs, TabsContent, TabsList, TabsTrigger } from "./ui/tabs"
-export { Avatar, AvatarImage, AvatarFallback } from "./ui/avatar"
-export * from "antd"
+export { Button } from "./core-component/button/button";
+export { Drawer } from "./core-component/drawer/index";
+export { Table } from "./core-component/table/index";

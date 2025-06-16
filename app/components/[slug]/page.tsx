@@ -1,6 +1,6 @@
 import { notFound } from "next/navigation"
-import { ComponentDocumentation } from "@/components/docs/component-documentation"
-import { getComponentBySlug } from "@/lib/component-registry"
+import { ComponentDocumentation } from "@/app/components/component-documentation"
+import { getComponentBySlug } from "@/library/component-registry"
 
 interface ComponentPageProps {
   params: {
@@ -20,15 +20,4 @@ export default function ComponentPage({ params }: ComponentPageProps) {
       <ComponentDocumentation component={component} />
     </div>
   )
-}
-
-export async function generateStaticParams() {
-  return [
-    { slug: "button" },
-    { slug: "card" },
-    { slug: "input" },
-    { slug: "badge" },
-    { slug: "avatar" },
-    { slug: "separator" },
-  ]
 }

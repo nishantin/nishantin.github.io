@@ -3,7 +3,7 @@ import type { Metadata } from "next"
 import { Inter } from "next/font/google"
 import "./globals.css"
 import { ConfigProvider } from "antd"
-import { Navbar } from "@/components/ui/navbar"
+import { Navbar } from "@/app/components/navbar"
 
 const inter = Inter({ subsets: ["latin"] })
 
